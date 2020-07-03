@@ -1,0 +1,182 @@
+﻿MOD_ERROR: TimedAssembler, in file: 
+Compilation of C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler_TimedAssembler failed:
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\Utils\Log.cs(11,24): Error: The namespace 'Nado.Logs' already contains a definition for 'Log'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\Utils\Log.cs(20,27): Error: Type 'Log' already defines a member called 'Write' with the same parameter types
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\Utils\Log.cs(44,27): Error: Type 'Log' already defines a member called 'WriteList' with the same parameter types
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\Utils\Log.cs(64,27): Error: Type 'Log' already defines a member called 'IsSERunning' with the same parameter types
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\Utils\Log.cs(69,28): Error: Type 'Log' already defines a member called 'ProgramIsRunning' with the same parameter types
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\Log.cs(22,17): Error: The call is ambiguous between the following methods or properties: 'Log.IsSERunning()' and 'Log.IsSERunning()'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\Log.cs(22,34): Error: Ambiguity between 'Log._inGame' and 'Log._inGame'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\Log.cs(24,16): Error: Ambiguity between 'Log._inGame' and 'Log._inGame'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\Log.cs(30,19): Error: Ambiguity between 'Log._inGame' and 'Log._inGame'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\Log.cs(50,23): Error: Ambiguity between 'Log._inGame' and 'Log._inGame'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\Log.cs(66,19): Error: The call is ambiguous between the following methods or properties: 'Log.ProgramIsRunning(string)' and 'Log.ProgramIsRunning(string)'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\Utils\Log.cs(22,17): Error: The call is ambiguous between the following methods or properties: 'Log.IsSERunning()' and 'Log.IsSERunning()'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\Utils\Log.cs(22,34): Error: Ambiguity between 'Log._inGame' and 'Log._inGame'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\Utils\Log.cs(24,16): Error: Ambiguity between 'Log._inGame' and 'Log._inGame'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\Utils\Log.cs(30,19): Error: Ambiguity between 'Log._inGame' and 'Log._inGame'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\CommandsController.cs(52,24): Error: The call is ambiguous between the following methods or properties: 'Log.Write(string)' and 'Log.Write(string)'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\CommandsController.cs(56,24): Error: The call is ambiguous between the following methods or properties: 'Log.WriteList(string[])' and 'Log.WriteList(string[])'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\CommandsController.cs(65,28): Error: The call is ambiguous between the following methods or properties: 'Log.Write(string)' and 'Log.Write(string)'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\CommandsController.cs(75,28): Error: The call is ambiguous between the following methods or properties: 'Log.Write(string)' and 'Log.Write(string)'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\CommandsController.cs(89,32): Error: The call is ambiguous between the following methods or properties: 'Log.Write(string)' and 'Log.Write(string)'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\SessionManager.cs(204,28): Error: The call is ambiguous between the following methods or properties: 'Log.Write(string)' and 'Log.Write(string)'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\SessionManager.cs(214,20): Error: The call is ambiguous between the following methods or properties: 'Log.Write(string)' and 'Log.Write(string)'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\Utils\Log.cs(50,23): Error: Ambiguity between 'Log._inGame' and 'Log._inGame'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\SessionManager.cs(86,20): Error: The call is ambiguous between the following methods or properties: 'Log.Write(string)' and 'Log.Write(string)'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\SessionManager.cs(91,20): Error: The call is ambiguous between the following methods or properties: 'Log.Write(string)' and 'Log.Write(string)'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\CommandsController.cs(108,20): Error: The call is ambiguous between the following methods or properties: 'Log.Write(string)' and 'Log.Write(string)'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\CommandsController.cs(113,24): Error: The call is ambiguous between the following methods or properties: 'Log.WriteList(string[])' and 'Log.WriteList(string[])'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\Utils\Log.cs(66,19): Error: The call is ambiguous between the following methods or properties: 'Log.ProgramIsRunning(string)' and 'Log.ProgramIsRunning(string)'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\SessionManager.cs(129,20): Error: The call is ambiguous between the following methods or properties: 'Log.Write(string)' and 'Log.Write(string)'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\SessionManager.cs(136,24): Error: The call is ambiguous between the following methods or properties: 'Log.Write(string)' and 'Log.Write(string)'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\SessionManager.cs(143,20): Error: The call is ambiguous between the following methods or properties: 'Log.Write(string)' and 'Log.Write(string)'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\SessionManager.cs(153,20): Error: The call is ambiguous between the following methods or properties: 'Log.Write(string)' and 'Log.Write(string)'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\TimedBlockController.cs(142,25): Error: The call is ambiguous between the following methods or properties: 'Log.IsSERunning()' and 'Log.IsSERunning()'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\TimedBlockController.cs(143,24): Error: The call is ambiguous between the following methods or properties: 'Log.Write(string)' and 'Log.Write(string)'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\TimedBlockController.cs(151,24): Error: The call is ambiguous between the following methods or properties: 'Log.Write(string)' and 'Log.Write(string)'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\TimedBlockController.cs(157,24): Error: The call is ambiguous between the following methods or properties: 'Log.Write(string)' and 'Log.Write(string)'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\TimedBlockController.cs(166,24): Error: The call is ambiguous between the following methods or properties: 'Log.Write(string)' and 'Log.Write(string)'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\SessionManager.cs(167,24): Error: The call is ambiguous between the following methods or properties: 'Log.Write(string)' and 'Log.Write(string)'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\SessionManager.cs(168,24): Error: The call is ambiguous between the following methods or properties: 'Log.WriteList(string[])' and 'Log.WriteList(string[])'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\SessionManager.cs(172,24): Error: The call is ambiguous between the following methods or properties: 'Log.Write(string)' and 'Log.Write(string)'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\SessionManager.cs(181,20): Error: The call is ambiguous between the following methods or properties: 'Log.Write(string)' and 'Log.Write(string)'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\SessionManager.cs(192,20): Error: The call is ambiguous between the following methods or properties: 'Log.Write(string)' and 'Log.Write(string)'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\CommandsController.cs(92,32): Error: The call is ambiguous between the following methods or properties: 'Log.Write(string)' and 'Log.Write(string)'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\CommandsController.cs(100,20): Error: The call is ambiguous between the following methods or properties: 'Log.Write(string)' and 'Log.Write(string)'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\SessionManager.cs(225,24): Error: The call is ambiguous between the following methods or properties: 'Log.Write(string)' and 'Log.Write(string)'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\Log.cs(25,24): Error: The type or member 'void Console.WriteLine(string value)' is prohibited
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\SessionManager.cs(253,20): Error: The call is ambiguous between the following methods or properties: 'Log.Write(string)' and 'Log.Write(string)'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\SessionManager.cs(257,24): Error: The call is ambiguous between the following methods or properties: 'Log.Write(string)' and 'Log.Write(string)'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\SessionManager.cs(261,24): Error: The call is ambiguous between the following methods or properties: 'Log.Write(string)' and 'Log.Write(string)'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\TimedBlockController.cs(179,20): Error: The call is ambiguous between the following methods or properties: 'Log.IsSERunning()' and 'Log.IsSERunning()'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\TimedBlockController.cs(180,20): Error: The call is ambiguous between the following methods or properties: 'Log.Write(string)' and 'Log.Write(string)'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\TimedBlockController.cs(184,21): Error: The call is ambiguous between the following methods or properties: 'Log.IsSERunning()' and 'Log.IsSERunning()'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\TimedBlockController.cs(186,20): Error: The call is ambiguous between the following methods or properties: 'Log.Write(string)' and 'Log.Write(string)'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\TimedBlockController.cs(187,20): Error: The call is ambiguous between the following methods or properties: 'Log.Write(string)' and 'Log.Write(string)'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\TimedBlockController.cs(188,20): Error: The call is ambiguous between the following methods or properties: 'Log.Write(string)' and 'Log.Write(string)'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\TimedBlockController.cs(194,25): Error: The call is ambiguous between the following methods or properties: 'Log.IsSERunning()' and 'Log.IsSERunning()'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\TimedBlockController.cs(195,24): Error: The call is ambiguous between the following methods or properties: 'Log.Write(string)' and 'Log.Write(string)'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\TimedBlockController.cs(202,25): Error: The call is ambiguous between the following methods or properties: 'Log.IsSERunning()' and 'Log.IsSERunning()'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\TimedBlockController.cs(203,24): Error: The call is ambiguous between the following methods or properties: 'Log.Write(string)' and 'Log.Write(string)'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\TimedBlockController.cs(207,25): Error: The call is ambiguous between the following methods or properties: 'Log.IsSERunning()' and 'Log.IsSERunning()'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\TimedBlockController.cs(208,24): Error: The call is ambiguous between the following methods or properties: 'Log.Write(string)' and 'Log.Write(string)'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\TimedBlockController.cs(213,25): Error: The call is ambiguous between the following methods or properties: 'Log.IsSERunning()' and 'Log.IsSERunning()'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\TimedBlockController.cs(215,24): Error: The call is ambiguous between the following methods or properties: 'Log.Write(string)' and 'Log.Write(string)'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\TimedBlockController.cs(216,24): Error: The call is ambiguous between the following methods or properties: 'Log.Write(string)' and 'Log.Write(string)'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\TimedBlockController.cs(226,25): Error: The call is ambiguous between the following methods or properties: 'Log.IsSERunning()' and 'Log.IsSERunning()'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\TimedBlockController.cs(227,24): Error: The call is ambiguous between the following methods or properties: 'Log.Write(string)' and 'Log.Write(string)'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\Utils\Log.cs(54,24): Error: The type or member 'Console' is prohibited
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\SessionManager.cs(228,24): Error: The call is ambiguous between the following methods or properties: 'Log.Write(string)' and 'Log.Write(string)'
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\Log.cs(34,20): Error: The type or member 'Console' is prohibited
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\Log.cs(34,28): Error: The type or member 'void Console.WriteLine(string value)' is prohibited
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\Log.cs(75,12): Error: The type or member 'Process' is prohibited
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\Log.cs(75,30): Error: The type or member 'Process' is prohibited
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\Log.cs(75,38): Error: The type or member 'Process[] Process.GetProcessesByName(string processName)' is prohibited
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\Log.cs(77,21): Error: The type or member 'Process' is prohibited
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\Log.cs(79,22): Error: The type or member 'ProcessModule Process.MainModule' is prohibited
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\Log.cs(79,33): Error: The type or member 'string ProcessModule.FileName' is prohibited
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\Utils\Log.cs(25,16): Error: The type or member 'Console' is prohibited
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\Utils\Log.cs(25,24): Error: The type or member 'void Console.WriteLine(string value)' is prohibited
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\Utils\Log.cs(34,20): Error: The type or member 'Console' is prohibited
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\Utils\Log.cs(34,28): Error: The type or member 'void Console.WriteLine(string value)' is prohibited
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\Log.cs(54,24): Error: The type or member 'Console' is prohibited
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\Log.cs(54,32): Error: The type or member 'void Console.WriteLine(string value)' is prohibited
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\Utils\Log.cs(75,12): Error: The type or member 'Process' is prohibited
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\Utils\Log.cs(75,30): Error: The type or member 'Process' is prohibited
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\Utils\Log.cs(75,38): Error: The type or member 'Process[] Process.GetProcessesByName(string processName)' is prohibited
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\Utils\Log.cs(77,21): Error: The type or member 'Process' is prohibited
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\Utils\Log.cs(79,22): Error: The type or member 'ProcessModule Process.MainModule' is prohibited
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\Utils\Log.cs(79,33): Error: The type or member 'string ProcessModule.FileName' is prohibited
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\Log.cs(25,16): Error: The type or member 'Console' is prohibited
+MOD_ERROR: TimedAssembler, in file: 
+C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\TimedAssembler\Data\Scripts\TimedAssembler\Utils\Log.cs(54,32): Error: The type or member 'void Console.WriteLine(string value)' is prohibited
