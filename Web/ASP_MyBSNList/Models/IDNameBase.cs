@@ -4,10 +4,13 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace ASP_MyBSNList.Models.Person_Components
+namespace ASP_MyBSNList.Models
 {
-    public class Status : IDNameBase
+    public class IDNameBase
     {
-        
+        byte Id { get; set; }
+
+        [Required]
+        string Name { get; set; }
     }
 }

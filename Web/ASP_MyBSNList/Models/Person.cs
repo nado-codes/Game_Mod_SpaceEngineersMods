@@ -1,4 +1,4 @@
-﻿using ASP_MyBSNList.Models.Components_Person;
+﻿using ASP_MyBSNList.Models.Person_Components;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -19,6 +19,6 @@ namespace ASP_MyBSNList.Models
         public Reason Reason { get; set; }
 
         [Required]
-        public int StatusId { get; set; }
+        public int ReasonId { get; set; }
     }
 }
