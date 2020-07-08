@@ -27,14 +27,29 @@ namespace Nado.TimedBlocks
         private static List<TimedBlockController> _timedBlockControllers = new List<TimedBlockController>();
         private static int _timer = 0;
 
+        public enum CommandId
+        {
+            AddBlock,UndoBlock,ListBlocks,ClearBlocks,
+            SetTimes,ListTimes,ClearTimes,GetNextTime,
+            Status,Enable,Disable, //DisableAuto
+        }
+
+        private static readonly string cmdPrefix = "/";
+        private static readonly string cmdModID = "tb";
+
+        private static readonly Dictionary<CommandId, string> _commandList = new Dictionary<CommandId, string>()
+        {
+            { CommandId.AddBlock, cmdModID+"AddBlock" }
+        };
+
         public override void LoadData()
         {
             _timedBlockControllers.Add(new TimedBlockController(false));
 
             CommandsController.Init();
             
-            CommandsController.SetUnknownCommandMessage("Type /tbHelp for a list of available commands");
-            CommandsController.CreateCommand("tbHelp", (cmdParams) =>
+            CommandsController.SetUnknownCommandMessage("Type "+cmdPrefix+cmdModID+"Help for a list of available commands");
+            CommandsController.CreateCommand(cmdModID+"Help", (cmdParams) =>
             {
                 Cmd_Help();
             });
@@ -89,12 +104,12 @@ namespace Nado.TimedBlocks
 
             CommandsController.CreateCommand("tbEnable", (cmdParams) =>
             {
-                //Cmd_Enable();
+                Cmd_Enable();
             });
 
-            CommandsController.CreateCommand("tbEnable", (cmdParams) =>
+            CommandsController.CreateCommand("tbDisable", (cmdParams) =>
             {
-                //Cmd_Disable();
+                Cmd_Disable();
             });
 
             CommandsController.CreateCommand("tbSetActiveMessage", (cmdParams) =>
@@ -161,9 +176,16 @@ namespace Nado.TimedBlocks
             {
                 if (_timedBlockControllers.Count == 1)
                 {
-                    Log.Write("Added block " + ent.GetType().FullName + " called \"" + ent.GetFriendlyName() + "\"");
+                    if (!_timedBlockControllers[0].GetBlocks().Contains(ent))
+                    {
+                        Log.Write("Added block " + ent.GetType().FullName + " called \"" + ent.DisplayName + "\"");
 
-                    _timedBlockControllers[0].AddBlock(ent as IMyFunctionalBlock);
+                        _timedBlockControllers[0].AddBlock(ent as IMyFunctionalBlock);
+                    }
+                    else
+                    {
+                        Log.Write("The block " + ent.GetType().FullName + " called \"" + ent.DisplayName + "\" already exists!");
+                    }
                 }
             }
             else
@@ -252,8 +274,15 @@ namespace Nado.TimedBlocks
             {
                 List<TimePair> tPairs = _timedBlockControllers[0].GetTimes();
 
-                if(tPairs.Count > 0)
-                    Log.Write("Times: "+tPairs.Select(p => p.ToString() + " "));
+                if (tPairs.Count > 0)
+                {
+                    string blockStr = "";
+
+                    foreach (TimePair p in tPairs)
+                        blockStr += p.ToString();
+
+                    Log.Write("Times: " + blockStr);
+                }
                 else
                 {
                     Log.Write("There are no times set. Use /tbSetTimes to set times");
@@ -265,7 +294,18 @@ namespace Nado.TimedBlocks
         {
             if (_timedBlockControllers.Count == 1)
             {
-                _timedBlockControllers[0].ClearTimes();
+                if (_timedBlockControllers[0].GetTimes().Count > 0)
+                {
+                    Log.Write("Cleared (" + _timedBlockControllers[0].GetTimes().Count + ") time blocks");
+
+                    Log.Write("The timed blocks are " + (_timedBlockControllers[0].IsActive() ? "active" : "inactive") 
+                    + ", you'll need to enable/disable them manually until more times are set.");
+
+                    Log.Write("Use /tbSetTimes to set new times");
+                    _timedBlockControllers[0].ClearTimes();
+                }
+                else
+                    Log.Write("There are no times set. Use /tbSetTimes to set times");
             }
         }
 
@@ -273,7 +313,7 @@ namespace Nado.TimedBlocks
         {
             if (_timedBlockControllers.Count == 1)
             {
-
+                Log.Write("The blocks will be enabled at " + _timedBlockControllers[0].GetNextActive());
             }
         }
 
@@ -287,9 +327,65 @@ namespace Nado.TimedBlocks
                 {
                     Log.Write("They will be disabled at "+_timedBlockControllers[0].GetNextInactive());
                 }
-                else
+                else if (_timedBlockControllers[0].GetNextActive() != -1)
                 {
                     Log.Write("They will be enabled at " + _timedBlockControllers[0].GetNextActive());
+                }
+                else
+                {
+                    Log.Write("There are no times set. Blocks can be enabled/disabled manually with /tbEnable or /tbDisable");
+                }
+            }
+        }
+
+        private void Cmd_Enable()
+        {
+            if (_timedBlockControllers.Count == 1)
+            {
+                if (!_timedBlockControllers[0].IsActive())
+                {
+                    Log.Write("Blocks enabled.");
+
+                    if(_timedBlockControllers[0].GetTimes().Count == 0)
+                    {
+                        Log.Write("You'll need to disable them manually - no times are set.");
+                    }
+                    else
+                    {
+                        Log.Write("As there are times set, they will stay active until "+ _timedBlockControllers[0].GetCurrentBlock().FinishHour);
+                    }
+
+                    _timedBlockControllers[0].SetBlocksActive(true);
+                }
+                else
+                {
+                    Log.Write("Blocks are already active");
+                }
+            }
+        }
+
+        private void Cmd_Disable()
+        {
+            if (_timedBlockControllers.Count == 1)
+            {
+                if (_timedBlockControllers[0].IsActive())
+                {
+                    Log.Write("Blocks disabled.");
+
+                    if (_timedBlockControllers[0].GetTimes().Count == 0)
+                    {
+                        Log.Write("You'll need to enable them manually - no times are set.");
+                    }
+                    else
+                    {
+                        Log.Write("As there are times set, they will stay inactive until " + _timedBlockControllers[0].GetCurrentBlock().StartHour);
+                    }
+
+                    _timedBlockControllers[0].SetBlocksActive(false);
+                }
+                else
+                {
+                    Log.Write("Blocks are already inactive");
                 }
             }
         }

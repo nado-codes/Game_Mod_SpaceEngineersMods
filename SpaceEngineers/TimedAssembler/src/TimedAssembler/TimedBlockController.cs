@@ -49,6 +49,8 @@ namespace Nado.TimedBlocks
         }
 
         #region Public Block Methods
+
+        #region Setters
         public void AddBlock(IMyFunctionalBlock block)
         {
             if (!_blocks.Contains(block))
@@ -72,13 +74,29 @@ namespace Nado.TimedBlocks
             }
         }
 
+        public void SetBlocksActive(bool isActive)
+        {
+            _isActive = isActive;
+
+            foreach (IMyFunctionalBlock block in _blocks)
+            {
+                block.Enabled = isActive;
+                Log.Write("Enabled " + block.GetType().FullName);
+            }
+        }
+        #endregion
+
+        #region Getters
         public List<IMyFunctionalBlock> GetBlocks()
         {
             return _blocks;
         }
         #endregion
 
+        #endregion
+
         #region Public Time Methods
+
         public void AddTime(int startHour, int finishHour)
         {
             //..Make sure the start time is less than the finish time
@@ -97,6 +115,8 @@ namespace Nado.TimedBlocks
         public void ClearTimes()
         {
             _todayTimes.Clear();
+            currentBlock = null;
+            nextBlock = null;
         }
 
         public List<TimePair> GetTimes()
@@ -107,6 +127,16 @@ namespace Nado.TimedBlocks
         public bool IsActive()
         {
             return _isActive;
+        }
+
+        public TimePair GetCurrentBlock()
+        {
+            return currentBlock;
+        }
+
+        public TimePair GetNextBlock()
+        {
+            return nextBlock;
         }
 
         public int GetNextActive()
@@ -143,7 +173,7 @@ namespace Nado.TimedBlocks
 
                 DateTime now = (debugHour == -1) ? DateTime.Now : new DateTime(2020, 1, 1, debugHour, 0, 0);
 
-                Log.Write(" - Hour is: " + now.Hour);
+                //Log.Write(" - Hour is: " + now.Hour);
 
                 //..get the next block from the current hour e.g. 1200
                 currentBlock = _todayTimes.FirstOrDefault(b => (now.Hour*100) <= b.StartHour);
@@ -195,7 +225,7 @@ namespace Nado.TimedBlocks
                     Log.Write("- Controller is now active @" + currentBlock.StartHour);
 
                 SetBlocksActive(true);
-                _isActive = true;
+                
             }
             else if (_isActive && now.Hour >= currentBlock.FinishHour / 100
             ) //..Once we reach the end, let's turn everything off and select the next block
@@ -214,8 +244,6 @@ namespace Nado.TimedBlocks
 
                 currentBlock = nextBlock;
                 nextBlock = null;
-
-                _isActive = false;
             }
             else if (now.Hour >= currentBlock.FinishHour / 100)
             {
@@ -230,14 +258,9 @@ namespace Nado.TimedBlocks
         }
         #endregion
 
-        #region Private Block Active Methods
-        private void SetBlocksActive(bool isActive)
-        {
-            foreach (IMyFunctionalBlock block in _blocks)
-            {
-                block.Enabled = isActive;
-            }
-        }
+        #region Private Block Methods
+
+        
 
         private void AssertValidActive(IMyTerminalBlock block)
         {

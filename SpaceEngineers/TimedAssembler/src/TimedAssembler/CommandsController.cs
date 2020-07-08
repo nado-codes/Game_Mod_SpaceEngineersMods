@@ -15,6 +15,7 @@ namespace Nado.Commands
     {
         private static CommandsController _singleton;
         private static bool _debug = false;
+        private static bool _debugIsAdmin = false;
 
         #region Static
         protected readonly Dictionary<string, CommandDefinition> _commands = new Dictionary<string, CommandDefinition>();
@@ -22,13 +23,13 @@ namespace Nado.Commands
         private static CommandDefinition _waitingCommand;
         private static string[] _waitingParams;
 
-        public static void Init()
+        public static void Init(bool debug = false, bool debugIsAdmin = true)
         {
             CheckUnload();
 
             _singleton = new CommandsController();
-
-            Log.Write("Command count: " + _singleton._commands.Count());
+            _debug = debug;
+            _debugIsAdmin = debugIsAdmin;
 
             if(IsPlayer(MyAPIGateway.Session))
                 MyAPIGateway.Utilities.MessageEntered += MessageHandler;
@@ -38,7 +39,9 @@ namespace Nado.Commands
         {
             _singleton?._commands.Clear();
             _singleton = null;
-            MyAPIGateway.Utilities.MessageEntered -= MessageHandler;
+
+            if(MyAPIGateway.Utilities != null)
+                MyAPIGateway.Utilities.MessageEntered -= MessageHandler;
         }
 
         public static void CreateCommand(string cmd, CmdAction cb, bool requireConfirm = false, bool isAdminOnly = false)
@@ -49,7 +52,29 @@ namespace Nado.Commands
 
         public static void SetUnknownCommandMessage(string msg)
         {
-            _singleton._unknownCommandMSG = msg;
+            if(_singleton != null)
+                _singleton._unknownCommandMSG = msg;
+        }
+
+        public static int GetCommandCount()
+        {
+            return _singleton?._commands.Count() ?? 0;
+        }
+
+        private static void ProcessCommand(CommandDefinition cmdDef, string[] cmdParams = null)
+        {
+            if (_debug)
+            {
+                Log.Write("Processing command \"" + cmdDef.CmdString + "\"" +
+                          (cmdParams != null ? " with params: " : ""));
+
+                if (cmdParams != null)
+                {
+                    Log.WriteList(cmdParams);
+                }
+            }
+
+            cmdDef.Callback?.Invoke(cmdParams);
         }
 
         private static void MessageHandler(string msg, ref bool sendToOthers)
@@ -60,7 +85,7 @@ namespace Nado.Commands
             {
                 sendToOthers = false;
 
-                if(_debug)
+                if (_debug)
                     Log.Write("Received command \"" + cmd.CmdString + "\"" + (cmd.Params != null ? " with params: " : ""));
 
                 if (cmd.Params != null)
@@ -95,13 +120,13 @@ namespace Nado.Commands
                     switch (cmd.CmdString)
                     {
                         case "y":
-                            ProcessCommand(_waitingCommand,_waitingParams);
+                            ProcessCommand(_waitingCommand, _waitingParams);
                             break;
                         case "n":
                             Log.Write("Cancelled last action");
                             break;
                         default:
-                            Log.Write("Unknown command \"" + cmd.CmdString + "\" "+ _singleton._unknownCommandMSG);
+                            Log.Write("Unknown command \"" + cmd.CmdString + "\" " + _singleton._unknownCommandMSG);
                             break;
                     }
                 }
@@ -109,45 +134,48 @@ namespace Nado.Commands
             else
             {
                 sendToOthers = true;
-                Log.Write("Invalid input");
             }
-        }
-
-        private static void ProcessCommand(CommandDefinition cmdDef, string[] cmdParams = null)
-        {
-            if (_debug)
-            {
-                Log.Write("Processing command \"" + cmdDef.CmdString + "\"" +
-                          (cmdParams != null ? " with params: " : ""));
-
-                if (cmdParams != null)
-                {
-                    Log.WriteList(cmdParams);
-                }
-            }
-
-            cmdDef.Callback?.Invoke(cmdParams);
         }
 
         private static bool IsAdmin(IMyPlayer player)
         {
-            switch (player.PromoteLevel)
+            if (player != null)
             {
-                case MyPromoteLevel.Admin:
-                case MyPromoteLevel.Owner:
-                    return true;
-                default:
-                    return false;
+                switch (player.PromoteLevel)
+                {
+                    case MyPromoteLevel.Admin:
+                    case MyPromoteLevel.Owner:
+                        return true;
+                    default:
+                        return false;
+                }
             }
+            else if (_debug) //..If we're debugging (e.g. Unit Tests), we'll return whether "Debug admin" is enabled
+                return _debugIsAdmin;
+            else
+                return false;
         }
 
         private static bool IsPlayer(IMySession session)
         {
-            if (session.Player != null || session.OnlineMode == MyOnlineModeEnum.OFFLINE)
+            if (session?.Player != null || session?.OnlineMode == MyOnlineModeEnum.PRIVATE || session?.OnlineMode == MyOnlineModeEnum.OFFLINE)
                 return true;
             
             return false;
         }
+        #endregion
+
+        #region DEBUG METHODS
+        public static void DEBUG_HandleMessage(string msg, ref bool sendToOthers)
+        {
+            MessageHandler(msg, ref sendToOthers);
+        }
+
+        public static CommandDefinition DEBUG_GetWaitingCommand()
+        {
+            return _waitingCommand;
+        }
+
         #endregion
     }
 
