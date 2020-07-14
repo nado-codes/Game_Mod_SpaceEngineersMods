@@ -44,7 +44,7 @@ namespace Nado.TimedBlocks
 
         public override void LoadData()
         {
-            _timedBlockControllers.Add(new TimedBlockController(_timedBlockControllers.Count,false));
+            _timedBlockControllers.Add(new TimedBlockController(_timedBlockControllers.Count,true));
 
             CommandsController.Init();
             CommandsController.SetUnknownCommandMessage("Type "+cmdPrefix+cmdModID+"Help for a list of available commands");

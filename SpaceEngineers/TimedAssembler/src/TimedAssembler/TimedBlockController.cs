@@ -27,8 +27,8 @@ namespace Nado.TimedBlocks
 
     public class TimedBlockConfig
     {
-        public List<TimePair> Times { get; private set; }
-        public List<BlockIdentifier> Blocks { get; private set; }
+        public List<TimePair> Times { get; set; }
+        public List<BlockIdentifier> Blocks { get; set; }
 
         public TimedBlockConfig() { } //Parameterless constructor used for XML serialisation
 
@@ -68,7 +68,7 @@ namespace Nado.TimedBlocks
 
     public class TimedBlockController
     {
-        public string FILENAME_CFG { get => "TB_" + Id; }
+        public string FILENAME_CFG => "TB_" + Id;
 
         private bool _testing = true;
         public int Id { get; private set; }
@@ -228,11 +228,17 @@ namespace Nado.TimedBlocks
             {
                 IMyCubeGrid grid = MyAPIGateway.Entities.GetEntityById(blockId.GridID) as IMyCubeGrid;
 
+                Log.Write(" - Access grid: " + grid.EntityId + " (" + grid.DisplayName + ")");
+
                 if (!gridTerminals.ContainsKey(grid.EntityId))
                     gridTerminals.Add(grid.EntityId, MyAPIGateway.TerminalActionsHelper.GetTerminalSystemForGrid(grid));
 
                 IMyGridTerminalSystem gts = gridTerminals[grid.EntityId];
                 IMyFunctionalBlock block = gts.GetBlockWithId(blockId.BlockID) as IMyFunctionalBlock;
+
+                Log.Write(" - Access terminal: " + gridTerminals[grid.EntityId]);
+                Log.Write(" - Access block: " + gts.GetBlockWithId(blockId.BlockID).GetType().FullName);
+                Log.Write(" - Access block (functional): " + (gts.GetBlockWithId(blockId.BlockID) as IMyFunctionalBlock).GetType().FullName);
 
                 _blocks.Add(block);
             }

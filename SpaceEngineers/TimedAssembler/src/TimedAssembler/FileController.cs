@@ -1,6 +1,6 @@
 ﻿using Nado.Logs;
-//using Sandbox.ModAPI;
-using MyAPIGateway = TimedAssembler.Tests.Utils.Emulator_MyAPIGateway;
+using Sandbox.ModAPI;
+//using MyAPIGateway = TimedAssembler.Tests.Utils.Emulator_MyAPIGateway;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,7 +11,7 @@ namespace TimedAssembler.IO
 {
     public sealed class FileController
     {
-        private const string Format = "Cfg_{0}.xml";
+        public static readonly string CfgFormat = "Cfg_{0}.xml";
 
         public static void SaveFile<T>(string filename, T data)
         {
@@ -26,9 +26,9 @@ namespace TimedAssembler.IO
                     string fileName;
 
                     if (!string.IsNullOrEmpty(filename))
-                        fileName = string.Format(Format, filename);
+                        fileName = string.Format(CfgFormat, filename);
                     else
-                        fileName = string.Format(Format, "NewCfg");
+                        fileName = string.Format(CfgFormat, "NewCfg");
 
                     Log.Write("Saving file \"" + fileName + "\"...");
 
