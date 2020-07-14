@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Nado.TimedBlocks;
-using Sandbox.ModAPI;
+//using Sandbox.ModAPI;
+using MyAPIGateway = TimedAssembler.Tests.Utils.Emulator_MyAPIGateway;
 
 namespace Nado.Logs
 {
@@ -17,7 +19,6 @@ namespace Nado.Logs
 
         public static void Write(string msg)
         {
-            //Console.WriteLine(msg);
             MyAPIGateway.Utilities.ShowMessage("Debug", msg);
         }
 
@@ -33,7 +34,6 @@ namespace Nado.Logs
             {
                 foreach (string item in list)
                 {
-                    //Console.WriteLine(" - "+item);
                     MyAPIGateway.Utilities.ShowMessage(null, " - " + item);
                 }
             }

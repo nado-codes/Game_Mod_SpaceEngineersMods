@@ -4,15 +4,53 @@ using System.Diagnostics;
 using System.Linq;
 using Sandbox.ModAPI;
 using Nado.Logs;
+using BlockID_Type = System.Int64;
+using VRage.Game.ModAPI;
+using VRage.Game;
+using TimedAssembler.IO;
 
 namespace Nado.TimedBlocks
 {
     public class TimespanException : Exception { }
 
+    public struct BlockIdentifier
+    {
+        public BlockID_Type GridID { get; set; }
+        public BlockID_Type BlockID { get; set; }
+
+        public BlockIdentifier(BlockID_Type gridId, BlockID_Type blockId)
+        {
+            GridID = gridId;
+            BlockID = blockId;
+        }
+    }
+
+    public class TimedBlockConfig
+    {
+        public List<TimePair> Times { get; private set; }
+        public List<BlockIdentifier> Blocks { get; private set; }
+
+        public TimedBlockConfig() { } //Parameterless constructor used for XML serialisation
+
+        public TimedBlockConfig(List<TimePair> times, List<BlockIdentifier> blockIds)
+        {
+            Times = new List<TimePair>();
+            Blocks = new List<BlockIdentifier>();
+
+            foreach(TimePair pair in times)
+                Times.Add(new TimePair(pair.StartHour, pair.FinishHour));
+
+            foreach (BlockIdentifier BlockID in blockIds)
+                Blocks.Add(BlockID);
+        }
+    }
+
     public class TimePair
     {
         public int StartHour;
         public int FinishHour;
+
+        private TimePair() { } //Parameterless constructor used for XML serialisation
 
         public TimePair(int startHour, int finishHour)
         {
@@ -26,9 +64,14 @@ namespace Nado.TimedBlocks
         }
     }
 
+    public delegate void VoidFN();
+
     public class TimedBlockController
     {
+        public string FILENAME_CFG { get => "TB_" + Id; }
+
         private bool _testing = true;
+        public int Id { get; private set; }
 
         List<TimePair> _todayTimes = new List<TimePair>();
         //private List<TimePair> _tomorrowTimes = new List<TimePair>();
@@ -43,9 +86,17 @@ namespace Nado.TimedBlocks
 
         private List<IMyFunctionalBlock> _blocks = new List<IMyFunctionalBlock>();
 
-        public TimedBlockController(bool testing = false)
+        public TimedBlockController(int id, bool testing = false)
         {
             _testing = testing;
+            Id = id;
+
+            //..load the config file for this timed block controller (if there is one)
+            //..if the config file is null, don't do anything
+            TimedBlockConfig cfg = FileController.LoadFile<TimedBlockConfig>(FILENAME_CFG);
+
+            if(cfg != null)
+                LoadConfig(cfg);
         }
 
         #region Public Block Methods
@@ -157,6 +208,47 @@ namespace Nado.TimedBlocks
         #endregion
 
         #region Public Utility Methods
+        public TimedBlockConfig GetConfig()
+        {
+            //..create a temp list to store block Ids
+            List<BlockIdentifier> temp = new List<BlockIdentifier>();
+
+            foreach (IMyFunctionalBlock block in _blocks)
+                temp.Add(new BlockIdentifier(block.CubeGrid.EntityId, block.EntityId));
+
+            return new TimedBlockConfig(_todayTimes, temp);
+        }
+
+        public void LoadConfig(TimedBlockConfig cfg)
+        {
+            Dictionary<BlockID_Type, IMyGridTerminalSystem> gridTerminals = new Dictionary<BlockID_Type, IMyGridTerminalSystem>();
+
+            //..Add all the blocks
+            foreach (BlockIdentifier blockId in cfg.Blocks)
+            {
+                IMyCubeGrid grid = MyAPIGateway.Entities.GetEntityById(blockId.GridID) as IMyCubeGrid;
+
+                if (!gridTerminals.ContainsKey(grid.EntityId))
+                    gridTerminals.Add(grid.EntityId, MyAPIGateway.TerminalActionsHelper.GetTerminalSystemForGrid(grid));
+
+                IMyGridTerminalSystem gts = gridTerminals[grid.EntityId];
+                IMyFunctionalBlock block = gts.GetBlockWithId(blockId.BlockID) as IMyFunctionalBlock;
+
+                _blocks.Add(block);
+            }
+
+            //..Add all the times
+            foreach(TimePair pair in cfg.Times)
+            {
+                _todayTimes.Add(pair);
+            }
+        }
+
+        public void SaveChanges()
+        {
+            FileController.SaveFile(FILENAME_CFG, GetConfig());
+        }
+
         public string GetBlockName(IMyFunctionalBlock block)
         {
             return block.GetType().Name + " called \"" + block.DisplayName + "\"";

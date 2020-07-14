@@ -32,5 +32,8 @@ namespace TimedAssembler.Tests.Utils
         }
     }
 
-    
+    public class Emulator_MyAPIGateway
+    {
+
+    }
 }

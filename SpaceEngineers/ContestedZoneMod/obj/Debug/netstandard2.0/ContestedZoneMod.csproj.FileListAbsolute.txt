@@ -1,2 +1,0 @@
-D:\Storage\Projects\SpaceEngineers\ContestedZoneMod\obj\Debug\netstandard2.0\ContestedZoneMod.AssemblyInfoInputs.cache
-D:\Storage\Projects\SpaceEngineers\ContestedZoneMod\obj\Debug\netstandard2.0\ContestedZoneMod.AssemblyInfo.cs

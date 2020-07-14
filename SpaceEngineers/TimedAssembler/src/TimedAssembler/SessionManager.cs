@@ -44,11 +44,11 @@ namespace Nado.TimedBlocks
 
         public override void LoadData()
         {
-            _timedBlockControllers.Add(new TimedBlockController(false));
+            _timedBlockControllers.Add(new TimedBlockController(_timedBlockControllers.Count,false));
 
             CommandsController.Init();
-            
             CommandsController.SetUnknownCommandMessage("Type "+cmdPrefix+cmdModID+"Help for a list of available commands");
+
             CommandsController.CreateCommand(cmdModID+"Help", (cmdParams) =>
             {
                 Cmd_Help();
@@ -181,6 +181,8 @@ namespace Nado.TimedBlocks
                         Log.Write("Added block " + ent.GetType().FullName + " called \"" + ent.DisplayName + "\"");
 
                         _timedBlockControllers[0].AddBlock(ent as IMyFunctionalBlock);
+
+                        _timedBlockControllers[0].SaveChanges();
                     }
                     else
                     {
@@ -203,6 +205,8 @@ namespace Nado.TimedBlocks
                 Log.Write("Removed block " + lastBlock.GetType().FullName + " called \"" + lastBlock.GetFriendlyName() + "\"");
 
                 _timedBlockControllers[0].RemoveBlock(lastBlock);
+
+                _timedBlockControllers[0].SaveChanges();
             }
         }
 
@@ -230,6 +234,8 @@ namespace Nado.TimedBlocks
             {
                 Log.Write("Removed "+_timedBlockControllers[0].GetBlocks().Count+" blocks");
                 _timedBlockControllers[0].ClearBlocks();
+
+                _timedBlockControllers[0].SaveChanges();
             }
         }
 
@@ -262,6 +268,11 @@ namespace Nado.TimedBlocks
                         _timedBlockControllers[0].AddTime(startHour,finishHour);
                         newTimeString += startHour + " " + finishHour + " ";
                     }
+                }
+
+                if(_timedBlockControllers.Count == 1)
+                {
+                    _timedBlockControllers[0].SaveChanges();
                 }
 
                 Log.Write("New times set: "+ newTimeString);
@@ -303,6 +314,8 @@ namespace Nado.TimedBlocks
 
                     Log.Write("Use /tbSetTimes to set new times");
                     _timedBlockControllers[0].ClearTimes();
+
+                    _timedBlockControllers[0].SaveChanges();
                 }
                 else
                     Log.Write("There are no times set. Use /tbSetTimes to set times");

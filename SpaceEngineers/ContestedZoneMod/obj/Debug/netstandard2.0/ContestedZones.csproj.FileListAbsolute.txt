@@ -1,4 +1,0 @@
-D:\Storage\Projects\SpaceEngineers\ContestedZoneMod\obj\Debug\netstandard2.0\ContestedZones.csprojAssemblyReference.cache
-D:\Storage\Projects\SpaceEngineers\ContestedZoneMod\obj\Debug\netstandard2.0\ContestedZones.AssemblyInfoInputs.cache
-D:\Storage\Projects\SpaceEngineers\ContestedZoneMod\obj\Debug\netstandard2.0\ContestedZones.AssemblyInfo.cs
-D:\Storage\Projects\SpaceEngineers\ContestedZoneMod\obj\Debug\netstandard2.0\ContestedZones.csproj.CoreCompileInputs.cache
