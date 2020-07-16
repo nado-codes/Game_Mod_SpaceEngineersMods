@@ -1,23 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
-using System.Text;
 using VRage.Game.Components;
 using Nado.Commands;
 using Nado.Logs;
-using Nado.TimedBlocks;
-using Sandbox.Engine.Physics;
-//using Sandbox.ModAPI;
-using SpaceEngineers.Game.Entities.Blocks;
-using SpaceEngineers.Game.ModAPI;
+using Sandbox.ModAPI;
 using VRage.Game;
-//using VRage.Game.ModAPI;
+using VRage.Game.ModAPI;
 using VRageMath;
 using VRage.ModAPI;
 
-using TimedAssembler.Emulators;
+//using TimedAssembler.Emulators;
 
 namespace Nado.TimedBlocks
 {
@@ -124,12 +117,6 @@ namespace Nado.TimedBlocks
                 Log.Write("That command hasn't been implemented yet!");
             }, false, true);
             #endregion
-
-            /*if(MyAPIGateway.Multiplayer.IsServer || debug)
-                MyAPIGateway.Multiplayer.RegisterMessageHandler(adminMsg, HandleAdminCommand);
-
-            if(!MyAPIGateway.Multiplayer.IsServer || debug)
-                MyAPIGateway.Multiplayer.RegisterMessageHandler(serverMsg, HandleServerMessage);*/
         }
 
         protected override void UnloadData()
@@ -147,6 +134,10 @@ namespace Nado.TimedBlocks
         private void Cmd_AddBlock()
         {
             IMyEntity ent = null;
+
+            IMyPlayer pl;
+
+            
 
             if (GetPlayer().Character != null && !GetPlayer().Character.IsDead)
             {
@@ -404,8 +395,6 @@ namespace Nado.TimedBlocks
                 }
             }
         }
-
-        
 
         public override void UpdateBeforeSimulation()
         {

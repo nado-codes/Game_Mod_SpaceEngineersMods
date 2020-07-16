@@ -7,7 +7,7 @@ namespace TimedAssembler.Tests.Utils.Emulators
 {
     public interface EM_IMyPlayer { }
 
-    public class EM_Player
+    public partial class EM_Player : EM_IMyPlayer
     {
         public EM_Character Character => new EM_Character();
     }
