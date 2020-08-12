@@ -8,6 +8,7 @@ using BlockID_Type = System.Int64;
 using VRage.Game.ModAPI;
 using VRage.Game;
 using TimedAssembler.IO;
+using VRage.Game.ModAPI.Ingame;
 
 //using TimedAssembler.Emulators;
 
@@ -110,6 +111,33 @@ namespace Nado.TimedBlocks
             {
                 block.EnabledChanged += AssertValidActive;
                 _blocks.Add(block);
+            }
+        }
+
+        public void AddBlocksFromIds(long[] blockIds)
+        {
+            foreach (long blockId in blockIds)
+            {
+                VRage.ModAPI.IMyEntity ent = MyAPIGateway.Entities.GetEntityById(blockId);
+
+                if (ent == null)
+                    Log.Write("problem finding entity with Id");
+
+                IMyFunctionalBlock block = ent as IMyFunctionalBlock;
+
+                if (block == null)
+                    Log.Write("the block isn't a functional one");
+
+                if (block != null && !_blocks.Contains(block))
+                {
+                    block.EnabledChanged += AssertValidActive;
+                    _blocks.Add(ent as IMyFunctionalBlock);
+                    Log.Write("added block successfully!");
+                }
+                else
+                {
+                    Log.Write("the block is already there");
+                }
             }
         }
 
@@ -216,14 +244,18 @@ namespace Nado.TimedBlocks
             List<BlockIdentifier> temp = new List<BlockIdentifier>();
 
             foreach (IMyFunctionalBlock block in _blocks)
+            {
+                Log.Write("Grid: " + block.CubeGrid.EntityId);
+                Log.Write("Block: " + block.EntityId);
                 temp.Add(new BlockIdentifier(block.CubeGrid.EntityId, block.EntityId));
+            }
 
             return new TimedBlockConfig(_todayTimes, temp);
         }
 
         public void LoadConfig(TimedBlockConfig cfg)
         {
-            Dictionary<BlockID_Type, IMyGridTerminalSystem> gridTerminals = new Dictionary<BlockID_Type, IMyGridTerminalSystem>();
+            /*Dictionary<BlockID_Type, IMyGridTerminalSystem> gridTerminals = new Dictionary<BlockID_Type, IMyGridTerminalSystem>();
 
             //..Add all the blocks
             foreach (BlockIdentifier blockId in cfg.Blocks)
@@ -249,7 +281,7 @@ namespace Nado.TimedBlocks
             foreach(TimePair pair in cfg.Times)
             {
                 _todayTimes.Add(pair);
-            }
+            }*/
         }
 
         public void SaveChanges()
@@ -268,8 +300,8 @@ namespace Nado.TimedBlocks
             //..only set the current/next block if times exist and current block is null. only check next block if the times count is > 1
             if (_todayTimes.Count > 0 && currentBlock == null)
             {
-                if (_testing)
-                    Log.Write("Current/Next not set, setting...");
+                //if (_testing)
+                    //Log.Write("Current/Next not set, setting...");
 
                 DateTime now = (debugHour == -1) ? DateTime.Now : new DateTime(2020, 1, 1, debugHour, 0, 0);
 
@@ -278,8 +310,8 @@ namespace Nado.TimedBlocks
                 //..get the next block from the current hour e.g. 1200
                 currentBlock = _todayTimes.FirstOrDefault(b => (now.Hour*100) <= b.StartHour);
 
-                if (_testing && currentBlock != null)
-                    Log.Write(" - Current block is: "+currentBlock);
+                //if (_testing && currentBlock != null)
+                    //Log.Write(" - Current block is: "+currentBlock);
 
                 //..get the next block after the current block e.g. 1200 (current) -> 1300 (next)
                 nextBlock = (currentBlock != null) ? _todayTimes.FirstOrDefault(b => b.StartHour >= currentBlock.FinishHour) : null;
@@ -287,25 +319,25 @@ namespace Nado.TimedBlocks
                 if (nextBlock == null)
                     nextBlock = _todayTimes.FirstOrDefault();
 
-                if (_testing)
-                    Log.Write(" - Next block is: " + nextBlock);
+                //if (_testing)
+                    //Log.Write(" - Next block is: " + nextBlock);
             }
 
             if ((timer % (60 ^ 3) == 0))
             {
                 if (_testing)
                 {
-                    Log.Write("Today time count: " + _todayTimes.Count);
-                    Log.Write("Current block : " + (currentBlock == null ? "Null" : currentBlock.StartHour + " - " + currentBlock.FinishHour));
-                    Log.Write("Next block : " + (nextBlock == null ? "Null" : nextBlock.StartHour + " - " + nextBlock.FinishHour));
+                    //Log.Write("Today time count: " + _todayTimes.Count);
+                    //Log.Write("Current block : " + (currentBlock == null ? "Null" : currentBlock.StartHour + " - " + currentBlock.FinishHour));
+                    //Log.Write("Next block : " + (nextBlock == null ? "Null" : nextBlock.StartHour + " - " + nextBlock.FinishHour));
                 }
 
                 if (CanUpdate())
                     Update_Hour();
-                else if(_testing)
-                {
-                    Log.Write("The timed block controller was unable to update. No times are set");
-                }
+                //else if(_testing)
+                //{
+                    //Log.Write("The timed block controller was unable to update. No times are set");
+                //}
             }
         }
 

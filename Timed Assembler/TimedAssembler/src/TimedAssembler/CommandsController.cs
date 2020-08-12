@@ -1,4 +1,5 @@
 ﻿using System;
+using ProtoBuf;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -20,8 +21,10 @@ namespace Nado.Commands
         #region Static
         protected readonly Dictionary<string, CommandDefinition> _commands = new Dictionary<string, CommandDefinition>();
         private string _unknownCommandMSG = "";
-        private static CommandDefinition _waitingCommand;
+        private static Command _waitingCommand;
         private static string[] _waitingParams;
+
+        private const ushort MSG_CMD = 3320;
 
         public static void Init(bool debug = false, bool debugIsAdmin = true)
         {
@@ -31,8 +34,10 @@ namespace Nado.Commands
             _debug = debug;
             _debugIsAdmin = debugIsAdmin;
 
-            if(IsPlayer(MyAPIGateway.Session))
-                MyAPIGateway.Utilities.MessageEntered += MessageHandler;
+            if (!MyAPIGateway.Session.IsServer || _debug)
+                MyAPIGateway.Utilities.MessageEntered += MessageHandler; //client listen to chat messages
+            else
+                MyAPIGateway.Utilities.RegisterMessageHandler(MSG_CMD, ServerMessageHandler);
         }
 
         public static void CheckUnload()
@@ -77,9 +82,33 @@ namespace Nado.Commands
             cmdDef.Callback?.Invoke(cmdParams);
         }
 
+        //RUN ON SERVER
+        private static void ServerMessageHandler(object data)
+        {
+            Log.Write("Received message from client");
+
+            var convertedData = data as byte[];
+            Command receivedCommand = MyAPIGateway.Utilities.SerializeFromBinary<Command>(convertedData);
+
+            if (receivedCommand != null)
+            {
+                CommandDefinition cmdDef = _singleton._commands[receivedCommand.CmdString];
+                ProcessCommand(cmdDef, receivedCommand.Params);
+
+                Log.Write("Processed command");
+            }
+            else
+            {
+                Log.Write("received a message from the client");
+            }
+        }
+
+        //RUN ON CLIENT
         private static void MessageHandler(string msg, ref bool sendToOthers)
         {
             Command cmd = Command.TryParse(msg);
+
+            
 
             if (cmd != null)
             {
@@ -105,14 +134,15 @@ namespace Nado.Commands
 
                     if (!cmdDef.RequireConfirm)
                     {
-                        ProcessCommand(cmdDef, cmd.Params);
+                        //ProcessCommand(cmdDef, cmd.Params); // PROCESS
+                        byte[] cmdData = MyAPIGateway.Utilities.SerializeToBinary(cmd);
+                        MyAPIGateway.Multiplayer.SendMessageToServer(MSG_CMD, cmdData);
                     }
                     else
                     {
                         Log.Write("Are you sure? (Enter /y or /n)");
 
-                        _waitingCommand = cmdDef;
-                        _waitingParams = cmd.Params;
+                        _waitingCommand = cmd;
                     }
                 }
                 else
@@ -120,7 +150,9 @@ namespace Nado.Commands
                     switch (cmd.CmdString)
                     {
                         case "y":
-                            ProcessCommand(_waitingCommand, _waitingParams);
+                            //ProcessCommand(_waitingCommand, _waitingParams); // PROCESS
+                            byte[] cmdData = MyAPIGateway.Utilities.SerializeToBinary(_waitingCommand);
+                            MyAPIGateway.Multiplayer.SendMessageToServer(MSG_CMD, cmdData);
                             break;
                         case "n":
                             Log.Write("Cancelled last action");
@@ -133,6 +165,7 @@ namespace Nado.Commands
             }
             else
             {
+                Log.Write("nothing happened");
                 sendToOthers = true;
             }
         }
@@ -171,11 +204,6 @@ namespace Nado.Commands
             MessageHandler(msg, ref sendToOthers);
         }
 
-        public static CommandDefinition DEBUG_GetWaitingCommand()
-        {
-            return _waitingCommand;
-        }
-
         #endregion
     }
 
@@ -197,9 +225,13 @@ namespace Nado.Commands
         }
     }
 
+    [ProtoContract]
     public class Command
     {
+        [ProtoMember(1)]
         public readonly string CmdString;
+
+        [ProtoMember(2)]
         public readonly string[] Params;
     
         public Command(string cmd, string[] cmdParams, bool requireConfirm = false)

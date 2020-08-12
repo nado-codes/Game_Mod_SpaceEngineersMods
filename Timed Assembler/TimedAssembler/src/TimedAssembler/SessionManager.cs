@@ -9,6 +9,7 @@ using VRage.Game;
 using VRage.Game.ModAPI;
 using VRageMath;
 using VRage.ModAPI;
+using TimedAssembler.IO;
 
 //using TimedAssembler.Emulators;
 
@@ -17,7 +18,20 @@ namespace Nado.TimedBlocks
     [MySessionComponentDescriptor(MyUpdateOrder.BeforeSimulation)]
     public class SessionManager : MySessionComponentBase
     {
-        private static bool _debug = true;
+        private static bool _debug = false;
+        private ushort SV_PING = 7821;
+
+        //ADD BLOCK IDS HERE, SEPARATED BY COMMA
+        private static readonly long[] BLOCK_IDS = new long[2] 
+        {
+            129231677836010872, //Assembler 
+            132028052049562808 //Beacon
+        };
+        private bool _loadedBlocks = false;
+
+        //ADD TIMES HERE. MUST BE IN PAIRS, AND SEPARATED BY WHITESPACE e.g. "0900 1000 1200 1300" has active blocks from 9am-10am, followed by 12pm-1pm.
+        //TIMES ARE IN 24 HOURS
+        private static readonly string BLOCK_TIMES = "0900 1000";
 
         private static List<TimedBlockController> _timedBlockControllers = new List<TimedBlockController>();
         private static int _timer = 0;
@@ -37,86 +51,64 @@ namespace Nado.TimedBlocks
             { CommandId.AddBlock, cmdModID+"AddBlock" }
         };
 
+
         public override void LoadData()
         {
-            _timedBlockControllers.Add(new TimedBlockController(_timedBlockControllers.Count,true));
+            if (AllowedToRun())
+            {
+                _timedBlockControllers.Add(new TimedBlockController(_timedBlockControllers.Count, true));
+
+                //..add blocks by Id, and add times
+
+                Cmd_SetTimes(BLOCK_TIMES.Split(' '));
+            }
+            else
+            {
+                
+            }
 
             CommandsController.Init();
-            CommandsController.SetUnknownCommandMessage("Type "+cmdPrefix+cmdModID+"Help for a list of available commands");
 
-            CommandsController.CreateCommand(cmdModID+"Help", (cmdParams) =>
+            if (!MyAPIGateway.Multiplayer.IsServer)
             {
-                Cmd_Help();
-            });
+                CommandsController.CreateCommand("ping", (cmdParams) =>
+                {
+                    Log.Write("Sending ping to server");
+                    byte[] msgData = MyAPIGateway.Utilities.SerializeToBinary("ping");
+                    MyAPIGateway.Multiplayer.SendMessageToServer(Log.MSG_LOG, msgData, true);
+                });
+
+                MyAPIGateway.Multiplayer.RegisterMessageHandler(Log.MSG_LOG, ServerMessageHandler);
+            }
 
             #region Block Commands
-            CommandsController.CreateCommand("tbAddBlock", (cmdParams) =>
-            {
-                Cmd_AddBlock();
-            }, false,true);
 
-            CommandsController.CreateCommand("tbUndoBlock", (cmdParams) =>
-            {
-                Cmd_UndoBlock();
-            }, false, true);
 
-            CommandsController.CreateCommand("tbListBlocks", (cmdParams) =>
-            {
-                Cmd_ListBlocks();
-            },false,true);
+            CommandsController.CreateCommand("tbListBlocks", (cmdParams) => { Cmd_ListBlocks(); }, false, true);
 
-            CommandsController.CreateCommand("tbClearBlocks", (cmdParams) =>
-            {
-                Cmd_ClearBlocks();
-            }, true, true);
             #endregion
 
             #region Timed Block Commands
-            CommandsController.CreateCommand("tbSetTimes", (cmdParams) =>
-            {
-                Cmd_SetTimes(cmdParams);
-            }, false, true);
 
-            CommandsController.CreateCommand("tbListTimes", (cmdParams) =>
-            {
-                Cmd_ListTimes();
-            }, false, true);
+            CommandsController.CreateCommand("tbListTimes", (cmdParams) => { Cmd_ListTimes(); }, false, true);
 
-            CommandsController.CreateCommand("tbClearTimes", (cmdParams) =>
-            {
-                Cmd_ClearTimes();
-            }, true, true);
+            CommandsController.CreateCommand("tbGetNextTime", (cmdParams) => { Cmd_GetNextTime(); }, false, true);
 
-            CommandsController.CreateCommand("tbGetNextTime", (cmdParams) =>
-            {
-                Cmd_GetNextTime();
-            }, false,true);
+            CommandsController.CreateCommand("tbStatus", (cmdParams) => { Cmd_GetStatus(); }, false, true);
 
-            CommandsController.CreateCommand("tbStatus", (cmdParams) =>
-            {
-                Cmd_GetStatus();
-            }, false, true);
+            CommandsController.CreateCommand("tbEnable", (cmdParams) => { Cmd_Enable(); });
 
-            CommandsController.CreateCommand("tbEnable", (cmdParams) =>
-            {
-                Cmd_Enable();
-            });
+            CommandsController.CreateCommand("tbDisable", (cmdParams) => { Cmd_Disable(); });
 
-            CommandsController.CreateCommand("tbDisable", (cmdParams) =>
-            {
-                Cmd_Disable();
-            });
-
-            CommandsController.CreateCommand("tbSetActiveMessage", (cmdParams) =>
-            {
-                Log.Write("That command hasn't been implemented yet!");
-            }, false, true);
-
-            CommandsController.CreateCommand("tbSetInactiveMessage", (cmdParams) =>
-            {
-                Log.Write("That command hasn't been implemented yet!");
-            }, false, true);
             #endregion
+        }
+
+        private void ServerMessageHandler(object data)
+        {
+            var convertedData = data as byte[];
+            string serverMsg = MyAPIGateway.Utilities.SerializeFromBinary<string>(convertedData);
+
+            Log.Write(serverMsg,false,"Server");
         }
 
         protected override void UnloadData()
@@ -131,13 +123,14 @@ namespace Nado.TimedBlocks
             Log.Write("/tbListTimes - List all the times stored");
         }
 
+        private void Cmd_AddBlocksFromIDs()
+        {
+            _timedBlockControllers[0].AddBlocksFromIds(BLOCK_IDS);
+        }
+
         private void Cmd_AddBlock()
         {
             IMyEntity ent = null;
-
-            IMyPlayer pl;
-
-            
 
             if (GetPlayer().Character != null && !GetPlayer().Character.IsDead)
             {
@@ -238,7 +231,7 @@ namespace Nado.TimedBlocks
 
             if (!valid)
             {
-                Log.Write("Invalid time pairs. Enter new times and try again");
+                //Log.Write("Invalid time pairs. Enter new times and try again");
             }
             else
             {
@@ -252,7 +245,7 @@ namespace Nado.TimedBlocks
 
                     if (!valid)
                     {
-                        Log.Write("Time values may only be integers (e.g. 1100,1300). Enter new times and try again");
+                        //Log.Write("Time values may only be integers (e.g. 1100,1300). Enter new times and try again");
                         return;
                     }
 
@@ -265,10 +258,10 @@ namespace Nado.TimedBlocks
 
                 if(_timedBlockControllers.Count == 1)
                 {
-                    _timedBlockControllers[0].SaveChanges();
+                    //_timedBlockControllers[0].SaveChanges();
                 }
 
-                Log.Write("New times set: "+ newTimeString);
+                //Log.Write("New times set: "+ newTimeString);
             }
         }
 
@@ -396,19 +389,24 @@ namespace Nado.TimedBlocks
             }
         }
 
+
         public override void UpdateBeforeSimulation()
         {
-            UpdateServerside();
-
-            _timer++;
-        }
-
-        private static void UpdateServerside()
-        {
-            if (MyAPIGateway.Session.IsServer || _debug)
+            if (AllowedToRun())
             {
+                if (!_loadedBlocks)
+                {
+                    _timedBlockControllers[0].AddBlocksFromIds(BLOCK_IDS);
+
+                    Log.Write("Loading operation success");
+
+                    _loadedBlocks = true;
+                }
+
                 foreach (TimedBlockController controller in _timedBlockControllers)
                     controller.Update(_timer);
+
+                _timer++;
             }
         }
 
@@ -423,6 +421,11 @@ namespace Nado.TimedBlocks
         public static bool IsDebug()
         {
             return _debug;
+        }
+
+        private bool AllowedToRun()
+        {
+            return (MyAPIGateway.Session.IsServer /*|| _debug*/);
         }
     }
 }
