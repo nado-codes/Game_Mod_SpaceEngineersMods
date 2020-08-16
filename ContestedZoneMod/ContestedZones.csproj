@@ -5,6 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="NewFolder\**" />
+    <Compile Remove="References\**" />
+    <EmbeddedResource Remove="NewFolder\**" />
+    <EmbeddedResource Remove="References\**" />
+    <None Remove="NewFolder\**" />
+    <None Remove="References\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="Sandbox.Common">
       <HintPath>..\..\..\..\Program Files (x86)\Steam\steamapps\common\SpaceEngineers\Bin64\Sandbox.Common.dll</HintPath>
     </Reference>
@@ -29,11 +38,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="References\RichHudFramework\Shared\UI\HUD\Rendering\TextBuilder\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="protobuf-net" Version="2.4.6" />
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="start Update.bat" />
+  </Target>
 
 </Project>

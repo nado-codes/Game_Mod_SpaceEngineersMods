@@ -1,2 +1,4 @@
-copy D:\Storage\Projects\SpaceEngineers\ContestedZoneMod\ContestedZones.cs C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\ContestedZone\Data\Scripts
-//@PAUSE
+xcopy .\src C:\Users\Nathan\AppData\Roaming\SpaceEngineers\Mods\ContestedZones_Dev\Data\Scripts  /s /y
+@ECHO OFF
+echo Operation completed
+exit

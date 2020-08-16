@@ -28,7 +28,7 @@ namespace ContestedZoneMod
 		[MySessionComponentDescriptor(MyUpdateOrder.BeforeSimulation)]
 		public class ContestedZoneMod : MySessionComponentBase
         {
-            private static bool debug = false;
+            private static bool debug = true;
 
 			//..MODIFY CONTESTED ZONE PARAMETERS HERE
 			string gps_center = "GPS:Zone:40500:-5330:14510:";
@@ -168,6 +168,8 @@ namespace ContestedZoneMod
                     //..refresh the entities every second
                     if (timer % (TimerMax_EntityUpdate * 60) == 0)
                     {
+                        MyAPIGateway.Utilities.ShowMessage("ContestedZones","Hello!");
+
                         //..we'll check the nearby entities again, because some players could have left
                         _knownEntities.Clear();
                         _knownBlacklistedEntities.Clear();
